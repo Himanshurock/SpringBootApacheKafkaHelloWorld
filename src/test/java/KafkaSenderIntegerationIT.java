@@ -46,7 +46,11 @@ public class KafkaSenderIntegerationIT {
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
 		  System.out.println("==========sender.send(data)===="+b);
-		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);	
+		  System.out.println("==========1===="+System.currentTimeMillis());
+		  kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
+		  System.out.println("==========2===="+System.currentTimeMillis());
+		  Thread.sleep(15000);
+		  System.out.println("==========3===="+System.currentTimeMillis());
 		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
 		  System.out.println("==========Before End====");
 		  Assert.assertTrue(b);
