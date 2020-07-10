@@ -1,33 +1,62 @@
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.javainuse.SpringBootHelloWorldApplication;
+import com.javainuse.service.KafkaSender;
 import com.javainuse.service.MessageBinding;
-
-import junit.framework.Assert;
+import com.javainuse.service.kafkaReciever;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = SpringBootHelloWorldApplication.class)
+//@SpringBootTest
+@SpringBootTest(classes = SpringBootHelloWorldApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@ContextConfiguration(classes = SpringBootHelloWorldApplication.class)
 @EnableAutoConfiguration
+@EnableBinding(MessageBinding.class)
 public class KafkaSenderIntegerationIT {
 	
 	  @Autowired
-	  private MessageBinding channel;
-
-	  @Test
-	  public void send() {
-		  String data = "IntegrationTest2";
-		final Message<String> message = MessageBuilder.withPayload(data).build();
-	    
-		Assert.assertTrue(channel.messageChannel().send(message));
-	}
+	  private KafkaSender sender;
+	  
+	  @Autowired
+	  kafkaReciever kafkaReciever;
+	  
+	/*
+	 * @Autowired MessageBinding messageBinding;
+	 */
+	
+	/*
+	 * @Autowired private MessageCollector collector;
+	 */
+	 
+	
+	  @Test 
+	  public void send() { 
+		  String data = "IntegrationTest222";
+	  
+		  boolean b = sender.send(data); 
+		  Assert.assertTrue(b);
+	  
+	  }
+	 
+	  
+	/*
+	 * @Test public void send2() { String data = "IntegrationTest444";
+	 * 
+	 * final Message<String> message = MessageBuilder.withPayload(data).build();
+	 * Assert.assertTrue(messageBinding.messageChannel().send(message)); //
+	 * System.out.println("===="+messageBinding.messageChannel().send(message));
+	 * 
+	 * // BlockingQueue<Message<?>> messages =
+	 * collector.forChannel(messageBinding.messageChannel());
+	 * //Assert.assertEquals(1, messages.size());
+	 * 
+	 * }
+	 */
 }
 
