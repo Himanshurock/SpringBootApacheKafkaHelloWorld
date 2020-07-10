@@ -40,6 +40,7 @@ public class KafkaSenderIntegerationIT {
 		  String data = "IntegrationTest222";
 	  
 		  boolean b = sender.send(data); 
+		  System.out.println("==========sender.send(data)===="+b);
 		  Assert.assertTrue(b);
 	  
 	  }
