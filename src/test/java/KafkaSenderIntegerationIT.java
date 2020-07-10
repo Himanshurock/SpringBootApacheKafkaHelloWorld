@@ -41,8 +41,9 @@ public class KafkaSenderIntegerationIT {
 		  String data = "IntegrationTest332274";
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
+		  Thread.sleep(15000);
 		  System.out.println("==========sender.send(data)===="+b);
-		  Thread.sleep(3000);
+		  
 		  Assert.assertTrue(b);
 	  
 	  }
