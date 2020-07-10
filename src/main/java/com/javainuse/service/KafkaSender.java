@@ -14,7 +14,8 @@ public class KafkaSender {
 
 	public boolean send(String data) {
 		final Message<String> message = MessageBuilder.withPayload(data).build();
-	    
+		  System.out.println("==========send Main method Start====");
+
 		return channel.messageChannel().send(message);
 	}
 }
