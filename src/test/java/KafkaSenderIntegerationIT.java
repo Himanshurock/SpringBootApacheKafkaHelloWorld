@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -38,7 +39,7 @@ public class KafkaSenderIntegerationIT {
 	  @Test 
 	  public void send() { 
 		  String data = "IntegrationTest222";
-	  
+		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
 		  System.out.println("==========sender.send(data)===="+b);
 		  Assert.assertTrue(b);
