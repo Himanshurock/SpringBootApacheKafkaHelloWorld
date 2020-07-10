@@ -37,11 +37,12 @@ public class KafkaSenderIntegerationIT {
 	 
 	
 	  @Test 
-	  public void send() { 
-		  String data = "IntegrationTest222";
+	  public void send() throws InterruptedException { 
+		  String data = "IntegrationTest332274";
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
 		  System.out.println("==========sender.send(data)===="+b);
+		  Thread.sleep(3000);
 		  Assert.assertTrue(b);
 	  
 	  }
