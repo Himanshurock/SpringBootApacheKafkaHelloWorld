@@ -1,3 +1,5 @@
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -44,9 +46,11 @@ public class KafkaSenderIntegerationIT {
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
 		  System.out.println("==========sender.send(data)===="+b);
-		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);		  
+		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);	
+		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
+		  System.out.println("==========Before End====");
 		  Assert.assertTrue(b);
-	  
+		  System.out.println("==========End====");
 	  }
 	 
 	  
