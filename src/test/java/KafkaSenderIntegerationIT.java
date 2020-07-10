@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,9 +43,8 @@ public class KafkaSenderIntegerationIT {
 		  String data = "IntegrationTest332274";
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
-		  Thread.sleep(15000);
 		  System.out.println("==========sender.send(data)===="+b);
-		  
+		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);		  
 		  Assert.assertTrue(b);
 	  
 	  }
