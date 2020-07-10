@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaSender {
 	
-	//String kafkaTopic = "java_in_use_topic";
 	
 	  @Autowired
 	  private MessageBinding channel;
 
-	public void send(String data) {
+	public boolean send(String data) {
 		final Message<String> message = MessageBuilder.withPayload(data).build();
 	    
-		channel.messageChannel().send(message);
+		return channel.messageChannel().send(message);
 	}
 }
