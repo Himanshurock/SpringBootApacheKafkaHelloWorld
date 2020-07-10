@@ -47,16 +47,24 @@ public class KafkaSenderIntegerationIT {
 		  boolean b = sender.send(data); 
 		  System.out.println("==========sender.send(data)===="+b);
 		  System.out.println("==========1===="+System.currentTimeMillis());
-		  kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
-		  System.out.println("==========2===="+System.currentTimeMillis());
-		  Thread.sleep(15000);
-		  System.out.println("==========3===="+System.currentTimeMillis());
-		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
+		/*
+		 * kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
+		 * System.out.println("==========2===="+System.currentTimeMillis());
+		 * Thread.sleep(15000);
+		 * System.out.println("==========3===="+System.currentTimeMillis());
+		 * assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0)
+		 */;
 		  System.out.println("==========Before End====");
 		  Assert.assertTrue(b);
 		  System.out.println("==========End====");
 	  }
 	 
+	  @Test 
+	  public void send2() throws InterruptedException { 
+		  kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
+		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
+
+	  }
 	  
 	/*
 	 * @Test public void send2() { String data = "IntegrationTest444";
