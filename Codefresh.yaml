@@ -1,0 +1,64 @@
+version: '1.0'
+stages:
+  - prepare
+  - test
+#   - build
+  - 'integration test'
+steps:
+  main_clone:
+    title: Cloning main repository...
+    stage: prepare
+    type: git-clone
+    repo: 'Himanshurock/SpringBootApacheKafkaHelloWorld'
+    revision: master
+    git: github
+  run_unit_tests:
+    title: Compile/Unit test+
+    stage: test
+    image: 'maven:3.5.2-jdk-8-alpine'
+    commands:
+      - mvn -Dmaven.repo.local=/codefresh/volume/m2_repository test     
+#   build_app_image:
+#     title: Building Docker Image
+#     type: build
+#     stage: build
+#     image_name: app
+#     working_directory: ./
+#     tag: 'multi-stage'
+#     dockerfile: Dockerfile
+  run_integration_tests:
+    title: Integration test
+    stage: 'integration test'
+    image: maven:3.5.2-jdk-8-alpine
+    commands:
+     - env
+     - mvn -Dmaven.repo.local=/codefresh/volume/m2_repository integration-test
+    environment:
+       -  spring.cloud.stream.bindings.InputCommonChannelTest.destination=MyTopic
+       -   spring.cloud.stream.bindings.CommonChannelTest.destination=MyTopic
+       -   spring.kafka.bootstrap-servers=kafka:9092
+       -   spring.kafka.properties.bootstrap.servers=kafka:9092
+       -   spring.cloud.stream.kafka.binder.autocreatetopics=true
+#     KAFKA_ZOOKEEPER_CONNECT: zk:2181
+
+    services:
+     composition:
+      zookeeper:
+          image: wurstmeister/zookeeper
+          ports:
+            - 2181
+      kafka:
+          image: 'wurstmeister/kafka'
+          links:
+            - zookeeper:zk
+          ports:
+            - 9092
+          environment:
+            KAFKA_ADVERTISED_HOST_NAME: kafka
+            KAFKA_ZOOKEEPER_CONNECT: zk:2181
+            KAFKA_MESSAGE_MAX_BYTES: 2000000
+#             KAFKA_CREATE_TOPICS: MyTopic:1:1
+#             KAFKA_BROKER_ID: 1
+#             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+          depends_on:
+            - zookeeper
