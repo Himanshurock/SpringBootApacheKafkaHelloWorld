@@ -45,7 +45,7 @@ public class KafkaSenderIntegerationIT {
 		  String data = "IntegrationTest123456";
 		  System.out.println("==========send test method====");
 		  boolean b = sender.send(data); 
-		  Thread.sleep(3000);
+		  Thread.sleep(10000);
 		  System.out.println("==========sender.send(data)===="+b);
 		  System.out.println("==========1===="+System.currentTimeMillis());
 		/*
@@ -63,7 +63,7 @@ public class KafkaSenderIntegerationIT {
 	 
 	  public void send2() throws InterruptedException { 
 		  System.out.println("==========Second method called====");
-		  kafkaReciever.getLatch().await(3000, TimeUnit.MILLISECONDS);
+		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);
 		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
 
 	  }
