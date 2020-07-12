@@ -57,10 +57,11 @@ public class KafkaSenderIntegerationIT {
 		  System.out.println("==========Before End====");
 		  Assert.assertTrue(b);
 		  System.out.println("==========End====");
+		  send2();
 	  }
 	 
-	  @Test 
 	  public void send2() throws InterruptedException { 
+		  System.out.println("==========Second method called====");
 		  kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
 		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
 
