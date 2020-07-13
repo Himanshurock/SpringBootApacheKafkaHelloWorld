@@ -38,7 +38,7 @@ import static org.mockito.ArgumentMatchers.argThat;
         properties = {
         		"spring.cloud.stream.bindings.InputCommonChannelTest.destination=MyTopic",
         		 "spring.cloud.stream.bindings.CommonChannelTest.destination=MyTopic",
-        		 "spring.kafka.bootstrap-servers=localhost:9092"
+        		 "spring.kafka.bootstrap-servers=kafka:9092"
         })
 public class DemoApplicationIT {
 
