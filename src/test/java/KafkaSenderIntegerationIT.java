@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.TestPropertySource;
 
 import com.javainuse.SpringBootHelloWorldApplication;
 import com.javainuse.service.KafkaSender;
@@ -24,6 +25,12 @@ import com.javainuse.service.kafkaReciever.MessageRequest;
 //@ContextConfiguration(classes = SpringBootHelloWorldApplication.class)
 @EnableAutoConfiguration
 @EnableBinding(MessageBinding.class)
+@TestPropertySource(
+        properties = {
+        		"spring.cloud.stream.bindings.InputCommonChannelTest.destination=MyTopic",
+        		 "spring.cloud.stream.bindings.CommonChannelTest.destination=MyTopic",
+        		 "spring.kafka.bootstrap-servers=kafka:9092"
+        })
 public class KafkaSenderIntegerationIT {
 	
 	  @Autowired
