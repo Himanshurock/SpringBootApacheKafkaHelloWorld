@@ -22,7 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.javainuse.SpringBootHelloWorldApplication;
-import com.javainuse.service.KafkaSender;
 import com.javainuse.service.MessageBinding;
 import com.javainuse.service.kafkaReciever;
 
@@ -37,7 +36,7 @@ import com.javainuse.service.kafkaReciever;
         properties = {
         		"spring.cloud.stream.bindings.InputCommonChannelTest.destination=MyTopic",
         		 "spring.cloud.stream.bindings.CommonChannelTest.destination=MyTopic",
-        		 "spring.kafka.bootstrap-servers=kafka:9092"
+        		 "spring.kafka.bootstrap-servers=localhost:9092"
         })
 public class DemoApplicationIT {
 	
@@ -76,8 +75,9 @@ public class DemoApplicationIT {
 	    @Test
 	    public void messageIsReceived() {
 	        MessageRequest req = new MessageRequest("abc12344");
+	        System.out.println("Before sent========");
 	        channel.messageChannel().send(MessageBuilder.withPayload(req).build());
-
+	        System.out.println("After sent========");
 	        // the message actually gets received. Need to do a timeout because I cannot manually force
 	        // a consumption of this message from Kafka. The default for timeout() is to check every
 	        // 10ms up to the timeout
