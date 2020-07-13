@@ -85,9 +85,7 @@ public class DemoApplicationIT {
 	        // the message actually gets received. Need to do a timeout because I cannot manually force
 	        // a consumption of this message from Kafka. The default for timeout() is to check every
 	        // 10ms up to the timeout
-	        timeout(10000);
-	        listener.reciever(argThat(m -> m.getId().equals(req.getId())));
-	       // verify(listener, timeout(5000)).reciever(argThat(m -> m.getId().equals(req.getId())));
+	        verify(listener, timeout(5000)).reciever(argThat(m -> m.getId().equals(req.getId())));
 	       // reciever(argThat(m -> m..equals(req.getId())));
 
 	    }
