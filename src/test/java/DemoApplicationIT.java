@@ -1,4 +1,3 @@
-
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
@@ -42,7 +41,7 @@ import static org.mockito.ArgumentMatchers.argThat;
         		 "spring.kafka.bootstrap-servers=kafka:9092"
         })
 public class DemoApplicationIT {
-	
+
 	@TestConfiguration
     static class Config {
 
@@ -50,7 +49,7 @@ public class DemoApplicationIT {
         public BeanPostProcessor messageRequestListenerPostProcessor() {
             return new ProxiedMockPostProcessor(kafkaReciever.class);
         }
-        
+
         static class ProxiedMockPostProcessor implements BeanPostProcessor {
             private final Class<?> mockedClass;
 
@@ -68,22 +67,20 @@ public class DemoApplicationIT {
             }
         }
 	}
-	
+
 	   @Autowired
 	    private kafkaReciever listener;
 
 	    @Autowired
 	    private KafkaSender producer;
-	    
+
 	    @Autowired
 		  private MessageBinding channel;
-	    
+
 	    @Test
 	    public void messageIsReceived() {
-	        MessageRequest req = new MessageRequest("abc123");
-	        System.out.println("Before==========");
+	        MessageRequest req = new MessageRequest("abc11123");
 	        channel.messageChannel().send(MessageBuilder.withPayload(req).build());
-	        System.out.println("After==========");
 
 	        // the message actually gets received. Need to do a timeout because I cannot manually force
 	        // a consumption of this message from Kafka. The default for timeout() is to check every
@@ -104,5 +101,5 @@ public class DemoApplicationIT {
 	            return this.id;
 	        }
 	    }
-	    
+
 }
