@@ -21,7 +21,7 @@ public class kafkaReciever {
 	 @StreamListener("InputCommonChannelTest")
 	public void reciever(MessageRequest msg) {
 		 
-		 System.out.println("============msg======="+msg.getId());
+		// System.out.println("============msg======="+msg.getId());
 		 latch.countDown();
 	}
 	 public static class MessageRequest {
