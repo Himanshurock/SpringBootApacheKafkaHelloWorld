@@ -7,15 +7,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.javainuse.SpringBootHelloWorldApplication;
 import com.javainuse.service.KafkaSender;
 import com.javainuse.service.MessageBinding;
 import com.javainuse.service.kafkaReciever;
+import com.javainuse.service.kafkaReciever.MessageRequest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest
@@ -42,10 +43,13 @@ public class KafkaSenderIntegerationIT {
 	
 	  @Test 
 	  public void send() throws InterruptedException { 
-		  String data = "IntegrationTest123456";
+		  
+
+		  String data = "IntegrationTest12345";
+		  MessageRequest req = new MessageRequest(data);
 		  System.out.println("==========send test method====");
-		  boolean b = sender.send(data); 
-		  Thread.sleep(10000);
+		  boolean b = sender.send(req); 
+		  Thread.sleep(3000);
 		  System.out.println("==========sender.send(data)===="+b);
 		  System.out.println("==========1===="+System.currentTimeMillis());
 		/*
@@ -63,11 +67,16 @@ public class KafkaSenderIntegerationIT {
 	 
 	  public void send2() throws InterruptedException { 
 		  System.out.println("==========Second method called====");
-		  kafkaReciever.getLatch().await(10000, TimeUnit.MILLISECONDS);
+		  kafkaReciever.getLatch().await(15000, TimeUnit.MILLISECONDS);
 		  assertThat(kafkaReciever.getLatch().getCount()).isEqualTo(0);
 
 	  }
 	  
+	  @Test
+		 @StreamListener("InputCommonChannelTest")
+	    public void send3() {
+	        System.out.println("===listener======"+kafkaReciever.getLatch().getCount());
+	    }	  
 	/*
 	 * @Test public void send2() { String data = "IntegrationTest444";
 	 * 
