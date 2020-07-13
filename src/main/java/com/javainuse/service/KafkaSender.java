@@ -5,8 +5,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
-import com.javainuse.service.kafkaReciever.MessageRequest;
-
 @Service
 public class KafkaSender {
 	
